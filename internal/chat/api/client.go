@@ -32,9 +32,11 @@ func NewClient(config *config.Config, logger *logger.Logger) *Client {
 }
 
 func (c *Client) textGenerationFromInstructionRequest(requestText string) *http.Request {
-	url := "https://llm.api.cloud.yandex.net/llm/v1alpha/instruct"
+	// url := "https://llm.api.cloud.yandex.net/llm/v1alpha/instruct"
+	url := "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
 	bodyBytes, err := json.Marshal(textGenerationFromInstructionRequest{
-		Model: "general",
+		// Model: "general",
+        ModelUri: "gpt://" + c.config.FolderID + "/yandexgpt-lite/latest",
 		GenerationOptions: textGenerationOptions{
 			PartialResults: false,
 			Temperature:    c.config.Temperature,
@@ -59,13 +61,14 @@ func (c *Client) textGenerationFromInstructionRequest(requestText string) *http.
 }
 
 func (c *Client) textGenerationFromChatRequest(chatHistory []domain.Message, requestText string) *http.Request {
-	url := "https://llm.api.cloud.yandex.net/llm/v1alpha/chat"
+	url := "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
 	textGenerationMessages := make([]textGenerationMessage, 0)
 	for _, m := range chatHistory {
 		textGenerationMessages = append(textGenerationMessages, textGenerationMessage{Role: m.Role.Name, Text: m.Text})
 	}
 	bodyBytes, err := json.Marshal(textGenerationFromChatRequest{
-		Model: "general",
+		// Model: "general",
+        ModelUri: "gpt://" + c.config.FolderID + "/yandexgpt-lite/latest",
 		GenerationOptions: textGenerationOptions{
 			PartialResults: false,
 			Temperature:    c.config.Temperature,

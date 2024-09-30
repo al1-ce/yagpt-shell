@@ -3,14 +3,16 @@ package api
 type TextGenerationMsg = string
 
 type textGenerationFromInstructionRequest struct {
-	Model             string                `json:"model"`
+	// Model             string                `json:"model"`
+    ModelUri          string                `json:"modelUri"`
 	GenerationOptions textGenerationOptions `json:"generationOptions"`
 	InstructionText   string                `json:"instructionText"`
 	RequestText       string                `json:"requestText"`
 }
 
 type textGenerationFromChatRequest struct {
-	Model             string                  `json:"model"`
+	// Model             string                  `json:"model"`
+    ModelUri          string                  `json:"modelUri"`
 	GenerationOptions textGenerationOptions   `json:"generationOptions"`
 	InstructionText   string                  `json:"instructionText"`
 	Messages          []textGenerationMessage `json:"messages"`
